@@ -19,53 +19,40 @@ class Router
     public function get(string $path, $callback)
     {
         $this->routes['get'][$path] = $callback;
-
-
-        // die(print_r($this->routes));
-        // die(print_r($callback));
-        // return new PageController;
-        // return $callback[0];
-
-        // $request_uri = trim($_SERVER['REQUEST_URI'],"/");
-
-        // $request_uri = (strpos($request_uri, "?")) ? substr($request_uri, 0, strpos($request_uri, "?")) : $request_uri;
-
-        // die($request_uri);
-
-        // $routeName = (strpos($path, ":")) ? substr($path, 0, strpos($path, ":")) : $path;
-
-        // if($request_uri == $routeName){
-        //     if(is_array($callback)){
-        //         $instance = new $callback[0];
-        //         $method = $callback[1];
-        //         echo $instance->$method();
-        //     }
-        // }
     }
 
+    public function post(string $path, $callback)
+    {
+        $this->routes['post'][$path] = $callback;
+    }
 
     public function resolve()
     {
         $path = $this->request->getPath();
-        $method = $this->request->getMethod();
+        $method = $this->request->method();
         $callback = $this->routes[$method][$path] ?? false;
 
         if ($callback === false) {
             $this->response->setStatusCode(404);
-            return $this->renderContent("<h1 style='color:red;font-size:3rem;text-align:center'>Not found!</h1>");
+            return $this->render("404");
         }
 
         if (is_string($callback)) {
             return $this->render($callback);
         }
 
-        return call_user_func($callback);
+        if(is_array($callback)){
+            App::$app->controller =  new $callback[0]();
+            $callback[0] = App::$app->controller;
+        }
+
+        return call_user_func($callback, $this->request);
     }
 
-    public function render($view)
+    public function render($view, $params = [])
     {
         $layout = $this->layout();
-        $content = $this->renderOnlyView($view);
+        $content = $this->renderOnlyView($view, $params);
         return str_replace('{{content}}', $content, $layout);
         // include_once App::$ROOT_DIR."/views/$view.php";
     }
@@ -78,16 +65,21 @@ class Router
 
     protected function layout()
     {
+        $layout = App::$app->controller->layout;
         ob_start();
-        if(file_exists(App::$ROOT_DIR . "/views/layouts/master.php")){
-            include_once App::$ROOT_DIR . "/views/layouts/master.php";
+        if(file_exists(App::$ROOT_DIR . "/views/layouts/$layout.php")){
+            include_once App::$ROOT_DIR . "/views/layouts/$layout.php";
         }
-        
+
         return ob_get_clean();
     }
 
-    protected function renderOnlyView($view)
+    protected function renderOnlyView($view, $params)
     {
+        foreach($params as $key => $value){
+            $$key = $value;
+        }
+    
         ob_start();
         if(file_exists(App::$ROOT_DIR . "/views/$view.php")){
             include_once App::$ROOT_DIR . "/views/$view.php";

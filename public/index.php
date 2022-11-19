@@ -2,32 +2,27 @@
 
 require_once __DIR__."/../vendor/autoload.php";
 
+use App\Controllers\AuthController;
+use App\Controllers\SiteController;
 use App\Core\App;
-
-// namespace Core;
-// use Core\App\Controllers\PageController;
-// use Core\Router;
-
-// use App\Router;
-
-// use App\Router;
-
-// include_once "core/autoload.php";
 
 
 $app = new App((dirname(__DIR__)));
+$route = $app->router;
 
-// $route->get('page/edit/:id', [PageController::class, 'edit']);
 
-// $app->router->get('page/index', [PageController::class, 'index']);
+$route->get('/', [SiteController::class, 'home']);
+$route->get('/blogs', [SiteController::class, 'blogs']);
+$route->get('/contact', [SiteController::class, 'contact']);
+$route->post('/contact', [SiteController::class, 'handleContact']);
 
-// $app->router->get('page/create', [PageController::class, 'create']);
-$app->router->get('/', 'home');
-$app->router->get('/blogs', 'blogs');
-$app->router->get('/contact', 'contact');
+$route->get('/login', [AuthController::class, 'login']);
+$route->post('/login', [AuthController::class, 'login']);
+$route->get('/register', [AuthController::class, 'register']);
+$route->post('/register', [AuthController::class, 'register']);
 
 $app->run();
-// $app = new App();
+
 
 
 

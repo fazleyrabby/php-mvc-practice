@@ -1,6 +1,6 @@
 <div class="px-4 py-2">
-<h2 class="pb-2 border-bottom">Contact</h2>
-<form action="/contact" method="post">
+<h2 class="pb-2 border-bottom">Login</h2>
+<form method="post">
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Email address</label>
     <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
