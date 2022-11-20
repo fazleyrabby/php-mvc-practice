@@ -31,6 +31,8 @@ class AuthController extends Controller{
             ]);
         }
         
-        return $this->view('register');
+        return $this->view('register', [
+            'model' => $register
+        ]);
     }
 }

@@ -6,8 +6,9 @@ use App\Controllers\AuthController;
 use App\Controllers\SiteController;
 use App\Core\App;
 
+$root = dirname(__DIR__);
 
-$app = new App((dirname(__DIR__)));
+$app = new App($root);
 $route = $app->router;
 
 
