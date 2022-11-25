@@ -1,6 +1,11 @@
+<?php
+use App\Core\Form\Form;
+$form = new Form();
+?>
+
 <div class="px-4 py-2">
 <h2 class="pb-2 border-bottom">Register</h2>
-<?php $form=\App\Core\Form\Form::begin('','post'); ?>
+<?php $form=Form::begin('','post'); ?>
   <?=$form->field($model, 'name')?>
   <?=$form->field($model, 'email')?>
   <?=$form->field($model, 'password')->passwordField()?>

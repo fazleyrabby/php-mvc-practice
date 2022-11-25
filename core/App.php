@@ -2,6 +2,7 @@
 
 namespace App\Core;
 
+
 class App {
     public Router $router;
     public Request $request;
@@ -9,13 +10,17 @@ class App {
     public static string $ROOT_DIR;
     public static App $app;
     public Controller $controller;
+    public Session $session;
+    public Database $db;
 
-    public function __construct($root)
+    public function __construct($root, array $config)
     {
         self::$ROOT_DIR = $root;
         self::$app = $this;
         $this->request = new Request();
         $this->response = new Response();
+        $this->session = new Session();
+        $this->db = new Database($config['db']);
         $this->router = new Router($this->request, $this->response);
     }
 
@@ -33,6 +38,5 @@ class App {
     {   
         return $this->controller;
     }
-
     
 }

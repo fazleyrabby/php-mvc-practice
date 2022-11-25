@@ -13,7 +13,7 @@ class Field
     public string $attribute;
     public string $type;
 
-    public function __construct(\App\Core\Model $model, string $attribute)
+    public function __construct(Model $model, string $attribute)
     {
         $this->model = $model;
         $this->attribute = $attribute;
@@ -29,8 +29,7 @@ class Field
                 <div class="invalid-feedback">
                     %s
                 </div>
-        </div>
-        ', 
+        </div>', 
         $this->attribute, 
         $this->type, 
         $this->attribute, 
