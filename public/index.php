@@ -24,8 +24,6 @@ $config=[
 ];
 
 
-
-
 $app = new App($root, $config);
 $route = $app->router;
 
