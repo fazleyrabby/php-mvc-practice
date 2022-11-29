@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bootstrap demo</title>
+  <title><?=$this->title?></title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 </head>
 
@@ -31,30 +31,46 @@
             </li>
 
           </ul>
+          <?php if (App::isGuest()) : ?>
+            <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/login">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/register">Register</a>
+              </li>
 
-          <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/login">Login</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/register">Register</a>
-            </li>
+            </ul>
+          <?php else : ?>
+            <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
 
-          </ul>
+            <li class="nav-item">
+                <a class="nav-link" href="/profile">
+                  Profile
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/logout">
+                  Welcome <?=App::$app->user->name?>,
+                  (Logout)
+                </a>
+              </li>
+            </ul>
+          <?php endif; ?>
         </div>
       </div>
     </nav>
     <div class="container">
       <?php if (App::$app->session->getFlash('success')) : ?>
         <div class="alert alert-success">
-          <?=App::$app->session->getFlash('success') ?>
+          <?= App::$app->session->getFlash('success') ?>
         </div>
       <?php endif; ?>
       {{content}}
     </div>
 
-    <div class="container footer mt-auto bg-light">
-      <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+    <div class="mt-auto bg-light">
+      <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 footer container">
         <div class="col-md-4 d-flex align-items-center">
           <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
             <svg class="bi" width="30" height="24">

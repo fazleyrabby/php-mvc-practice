@@ -1,4 +1,3 @@
-
     <h2 class="pb-2 border-bottom">Blogs</h2>
     <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
       <div class="feature col">

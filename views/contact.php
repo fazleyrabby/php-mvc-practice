@@ -1,20 +1,20 @@
+<?php
+use App\Core\Form\Form;
+use App\Core\Form\Select;
+use App\Core\Form\TextAreaField;
+
+$this->title = 'Contact';
+?>
 <div class="px-4 py-2">
 <h2 class="pb-2 border-bottom">Contact</h2>
 <form action="/contact" method="post">
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Email address</label>
-    <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Password</label>
-    <input type="password" name="password" class="form-control" id="exampleInputPassword1">
-  </div>
-  <div class="mb-3 form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-  </div>
+<?php $form=Form::begin('','post'); ?>
+  <?=$form->field($model, 'subject')?>
+  <?=$form->field($model, 'email')?>
+  <?=new TextAreaField($model, 'body')?>
+  <?php //new Select($model, 'select', ['1' => 'Option1', '2' => 'Option2']);?>
   <button type="submit" class="btn btn-primary">Submit</button>
+<?php Form::end(); ?>
 </form>
 </div>
 

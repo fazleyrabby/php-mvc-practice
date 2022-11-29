@@ -4,7 +4,7 @@ namespace App\Core\Form;
 
 use App\Core\Model;
 
-class Field
+class InputField extends BaseField
 {
     public const TYPE_TEXT = 'text';
     public const TYPE_PASSWORD = 'password';
@@ -15,27 +15,24 @@ class Field
 
     public function __construct(Model $model, string $attribute)
     {
-        $this->model = $model;
-        $this->attribute = $attribute;
         $this->type = self::TYPE_TEXT;
+        parent::__construct($model, $attribute);
     }
 
     public function __toString()
     {
-        return sprintf('
+        return sprintf(
+            '
         <div class="mb-3 form-group">
             <label for="name" class="form-label">%s</label>
-                <input type="%s" name="%s" value="%s" aria-describedby="emailHelp" class="form-control %s">
+                %s
                 <div class="invalid-feedback">
                     %s
                 </div>
-        </div>', 
-        $this->model->getLabel($this->attribute), 
-        $this->type, 
-        $this->attribute, 
-        $this->model->{$this->attribute},
-        $this->model->hasError($this->attribute) ? 'is-invalid' : '',
-        $this->model->getFirstError($this->attribute)
+        </div>',
+            $this->model->getLabel($this->attribute),
+            $this->renderInput(),
+            $this->model->getFirstError($this->attribute)
         );
     }
 
@@ -43,5 +40,16 @@ class Field
     {
         $this->type = self::TYPE_PASSWORD;
         return $this;
+    }
+
+    public function renderInput(): string
+    {
+        return sprintf(
+            '<input type="%s" name="%s" value="%s" aria-describedby="emailHelp" class="form-control %s">',
+            $this->type,
+            $this->attribute,
+            $this->model->{$this->attribute},
+            $this->model->hasError($this->attribute) ? 'is-invalid' : '',
+        );
     }
 }
