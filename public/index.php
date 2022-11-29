@@ -40,6 +40,7 @@ $route->post('/login', [AuthController::class, 'login']);
 $route->get('/register', [AuthController::class, 'register']);
 $route->post('/register', [AuthController::class, 'register']);
 $route->get('/logout', [AuthController::class, 'logout']);
+$route->get('/profile', [AuthController::class, 'profile']);
 
 $app->run();
 
