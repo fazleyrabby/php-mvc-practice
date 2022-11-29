@@ -33,7 +33,7 @@ $route = $app->router;
 $route->get('/', [SiteController::class, 'home']);
 $route->get('/blogs', [SiteController::class, 'blogs']);
 $route->get('/contact', [SiteController::class, 'contact']);
-$route->post('/contact', [SiteController::class, 'handleContact']);
+$route->post('/contact', [SiteController::class, 'contact']);
 
 $route->get('/login', [AuthController::class, 'login']);
 $route->post('/login', [AuthController::class, 'login']);
